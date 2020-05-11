@@ -8,10 +8,11 @@
        @keypress="fetchWeather"
        >
     </div>
-<div v-if="fetched">
+<!-- <div v-if="fetched">
   <h1>You are searching for: {{query}}  </h1>
   <p> Name: {{weather.name}} <br> climate: {{fetchdis}} </p>
-</div>
+</div> -->
+
 <div class="weather-wrap" v-if=" typeof weather.main !='undefined'">
       <div class="location-box">
 
@@ -21,8 +22,9 @@
 
       <div class="weather-box">
   
-        <div class="temp">40 </div>
-        <div class="weather"> Hot</div>
+        <div class="temp"> Temperature :{{(weather.main.temp -0)}} </div>
+        <div class="weather"> Description: {{weather.weather['0'].main}} </div>
+        <div class="lastUpdate"> </div>
         
         </div>
 </div>
@@ -55,10 +57,15 @@ export default {
            axios.get('https://api.openweathermap.org/data/2.5/weather',{ 
               params:{
                  q: this.query,
-                  appid: this.api_key
+                 appid: this.api_key,
+                 units: 'metric'
+                 
                  
               }
-          }).then(response=>{
+          }).then(response=>
+          
+          
+          {
               this.weather = response.data;
               console.log(this.weather.name);
           }).then(this.fetched=true);
